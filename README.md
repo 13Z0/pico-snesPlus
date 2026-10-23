@@ -155,8 +155,11 @@ The PicoNES PCB turns the HW_CONFIG 2 breadboard build into a small console. It 
 
 | Design | Picture | Controller ports | Designed by |
 | ------ | ------- | ---------------- | ----------- |
-| [PicoNES v2.6](#picones-pcb) | <img src="https://github.com/user-attachments/assets/2bbc846d-56b1-4528-9899-01bc9b32ce11" width="240" alt="PicoNES v2.6"> | 2 × NES | [John Edgar Park](https://twitter.com/johnedgarpark) |
-| [PicoNES v2.8](#picones-pcb) | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.8s_assembled.jpg" width="240" alt="PicoNES v2.8 with SNES controller ports"> | 2 × SNES | [John Edgar Park](https://twitter.com/johnedgarpark) |
+| [PicoNES v2.6](#picones-pcb) | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.6_assembled.jpg" width="240" alt="PicoNES v2.6 with a Pimoroni Pico Plus 2"><br><sub>See note</sub> | 2 × NES | [John Edgar Park](https://twitter.com/johnedgarpark) |
+| [PicoNES v2.8](#picones-pcb) | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.8s_assembled.jpg" width="240" alt="PicoNES v2.8 with SNES controller ports"><br><sub>See note</sub> | 2 × SNES | [John Edgar Park](https://twitter.com/johnedgarpark) |
+
+> [!NOTE]
+> The PicoNES v2.6 and v2.8 are shown with a Pimoroni Pico Plus 2. This emulator needs the PSRAM of the Pimoroni Pico Plus 2, so no other board can be fitted.
 
 The other designs in the PCB README cannot be used with this emulator. The PicoNES Mini and PicoNES Micro are built around Waveshare boards without PSRAM, and on designs v2.1 and older the microcontroller board must lie flat on the PCB, which the Pimoroni Pico Plus 2 cannot.
 
@@ -179,9 +182,9 @@ Flash `picosnesPlus_AdafruitDVISD_pico2_arm.uf2`, the same file as the breadboar
 
 The parts lists and assembly notes are in the PCB README: [PicoNES v2.6](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md#picones-v26-nes-controller-ports) and [PicoNES v2.8](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md#picones-v28-snes-controller-ports).
 
-| NES controller ports (v2.6; an earlier v2.0 board with the same layout is shown) | SNES controller ports (v2.8) |
-| -------------------------------------------------------------------------------- | ---------------------------- |
-| <img src="https://github.com/user-attachments/assets/d40ed98f-4632-4161-986a-732d35290fac" width="400" alt="Two-player setup with two NES controllers"> | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.8s_assembled.jpg" width="400" alt="PicoNES v2.8 with SNES controller ports"> |
+| NES controller ports (v2.6) | SNES controller ports (v2.8) |
+| --------------------------- | ---------------------------- |
+| <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.6_assembled.jpg" width="400" alt="PicoNES v2.6 with NES controller ports"> | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.8s_assembled.jpg" width="400" alt="PicoNES v2.8 with SNES controller ports"> |
 
 #### 3D printed case
 
