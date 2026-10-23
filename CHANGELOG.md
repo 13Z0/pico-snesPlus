@@ -1,6 +1,6 @@
 # CHANGELOG
 
-**v0.8** adds the **Olimex RP2040-PICO-PC** with a Raspberry Pi Pico 2 compatible board that has 8 MB of PSRAM to the supported boards.
+**v0.8.1** adds a PicoNES PCB design with SNES controller ports. The emulator is unchanged from v0.8.
 
 # General Info
 
@@ -15,6 +15,15 @@
 > **The optional 504 MHz overclock in the settings menu is not advised. Leave it off.**
 >
 > It gains very little — the bottleneck is PSRAM bandwidth, not the CPU clock, so most games run at essentially the same speed as at the default 378 MHz. It raises the core voltage, makes the chip run considerably hotter, and can overheat, destabilise or permanently damage the RP2350 and the board it is on. It is off by default and exists for experimenting only. Enabling it is entirely at your own risk; the author accepts no responsibility for any damage.
+
+# v0.8.1
+
+## What's new
+
+- **PicoNES PCB with SNES controller ports.** PCB design v2.8, designed by John Edgar Park ([@johnedgarpark](https://twitter.com/johnedgarpark)), has two SNES controller ports, so original SNES controllers plug in without an adapter cable. Like v2.6, it needs a Pimoroni Pico Plus 2 mounted on male headers. The Gerber file `pico_nesPCB_v2.8_SNES_PORTS.zip` is attached below. See [Custom PCB](https://github.com/PicoPlus-devel/pico-snesPlus#custom-pcb) in the README.
+- All PCB designs, with parts lists and pictures, are now described in the [PCB README](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md).
+
+The binaries are the same as in v0.8.
 
 # v0.8
 
@@ -289,7 +298,7 @@ Only the five RP2350 + PSRAM configurations below are supported. For board-by-bo
 
 | HW_CONFIG | Board | Binary |
 |:--|:--|:--|
-| 2 | Pimoroni Pico Plus 2, on a breadboard or on the PicoNES PCB | [picosnesPlus_AdafruitDVISD_pico2_arm.uf2](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/picosnesPlus_AdafruitDVISD_pico2_arm.uf2) |
+| 2 | Pimoroni Pico Plus 2, on a breadboard or on the PicoNES PCB (v2.6 or v2.8) | [picosnesPlus_AdafruitDVISD_pico2_arm.uf2](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/picosnesPlus_AdafruitDVISD_pico2_arm.uf2) |
 | 8 | Adafruit Fruit Jam | [picosnesPlus_AdafruitFruitJam_arm_piousb.uf2](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/picosnesPlus_AdafruitFruitJam_arm_piousb.uf2) |
 | 13 | Murmulator M2 | [picosnesPlus_MurmulatorM2_arm.uf2](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/picosnesPlus_MurmulatorM2_arm.uf2)  |
 | 14 | Adafruit Feather RP2350 with TLV320DAC3100 | [picosnesPlus_AdafruitFeatherRP2350_TLV320DAC3100_arm_piousb.uf2](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/picosnesPlus_AdafruitFeatherRP2350_TLV320DAC3100_arm_piousb.uf2) |
@@ -298,7 +307,10 @@ Only the five RP2350 + PSRAM configurations below are supported. For board-by-bo
 ## Other downloads
 
 - Metadata: [SNESMetadata.zip](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/SNESMetadata.zip)
-- PicoNES PCB gerbers: [pico_nesPCB_v2.6.zip](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/pico_nesPCB_v2.6.zip) — upload as-is to a PCB manufacturer. See [PicoNES PCB](https://github.com/PicoPlus-devel/pico-snesPlus#picones-pcb) in the README.
 
 Extract the zip file to the root folder of the SD card. Select a game in the menu and press START to show more information and box art. Works for most official released games. The screensaver shows floating random cover art.
+
+- PicoNES PCB Gerber files. Upload the zip file unchanged to a PCB manufacturer. See [PicoNES PCB](https://github.com/PicoPlus-devel/pico-snesPlus#picones-pcb) in the README for the requirements of this emulator, and the [PCB README](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md) for parts lists and build instructions.
+  - PicoNES v2.6, NES controller ports: [pico_nesPCB_v2.6.zip](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/pico_nesPCB_v2.6.zip)
+  - PicoNES v2.8, SNES controller ports: [pico_nesPCB_v2.8_SNES_PORTS.zip](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest/download/pico_nesPCB_v2.8_SNES_PORTS.zip)
 

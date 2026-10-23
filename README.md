@@ -12,7 +12,7 @@ It is a sister project of these emulators, with which it shares its menu, displa
 It runs on five hardware configurations, each with its own ready-made binary — see [Supported hardware](#supported-hardware) for the download links:
 
 - [Adafruit Fruit Jam](https://www.adafruit.com/product/6200) — the primary development and test board
-- [Pimoroni Pico Plus 2](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107) with an [Adafruit DVI breakout](https://www.adafruit.com/product/4984) and a microSD breakout, on a breadboard or on the [PicoNES PCB](#picones-pcb)
+- [Pimoroni Pico Plus 2](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107) with an [Adafruit DVI breakout](https://www.adafruit.com/product/4984) and a microSD breakout, on a breadboard or on the [PicoNES PCB](#picones-pcb) (v2.6 with NES or v2.8 with SNES controller ports)
 - [Murmulator M2](https://murmulator.ru)
 - [Adafruit Feather RP2350 with HSTX Port](https://www.adafruit.com/product/6130) with a TLV320DAC3100 I2S DAC and a microSD breakout
 - [Olimex RP2040-PICO-PC](https://www.olimex.com/Products/MicroPython/PICO/RP2040-PICO-PC/) with a Raspberry Pi Pico 2 compatible board that has 8 MB of PSRAM
@@ -151,73 +151,48 @@ For wiring and assembly instructions, see the setup sections of the [pico-infone
 
 ## Custom PCB
 
-A community PCB design turns the HW_CONFIG 2 breadboard build into a finished little console: it carries a Pico-format board, the DVI and microSD breakouts and up to two controller ports on a single board, with an optional 3D-printed case. Nothing changes in the firmware — it is simply a neater way to build hardware this emulator already supports, so you flash the same HW_CONFIG 2 binary and you are done.
+The PicoNES PCB turns the HW_CONFIG 2 breadboard build into a small console. It carries the microcontroller board, the DVI and microSD breakouts and two controller ports. It comes in two versions, which differ only in the controller ports: **v2.6** with NES controller ports and **v2.8** with SNES controller ports. For this emulator, both versions need a Pimoroni Pico Plus 2 mounted on male headers. Parts lists, assembly notes, the pin assignment and the 3D-printed case are described in the [PCB README](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md). Both Gerber files are attached to every [release](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest) of this project.
 
-| Design | Board it carries | Build | Gerber archive | Designed by |
-| --- | --- | --- | --- | --- |
-| [PicoNES](#picones-pcb) | Pimoroni Pico Plus 2 on male headers — design **v2.6** or later only | `-c2` | `pico_nesPCB_v2.6.zip` | John Edgar Park |
+| Design | Picture | Controller ports | Designed by |
+| ------ | ------- | ---------------- | ----------- |
+| [PicoNES v2.6](#picones-pcb) | <img src="https://github.com/user-attachments/assets/2bbc846d-56b1-4528-9899-01bc9b32ce11" width="240" alt="PicoNES v2.6"> | 2 × NES | [John Edgar Park](https://twitter.com/johnedgarpark) |
+| [PicoNES v2.8](#picones-pcb) | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.8s_assembled.jpg" width="240" alt="PicoNES v2.8 with SNES controller ports"> | 2 × SNES | [John Edgar Park](https://twitter.com/johnedgarpark) |
 
-The archive is attached to every [release](https://github.com/PicoPlus-devel/pico-snesPlus/releases/latest) of this project and also lives in [`pico_shared/PCB`](https://github.com/PicoPlus-devel/pico_shared/tree/main/PCB). Upload the zip as-is to a PCB manufacturer of your choice; [PCBWay](https://www.pcbway.com/) and JLCPCB are both good options.
-
-The other two designs from [pico-infonesPlus](https://github.com/PicoPlus-devel/pico-infonesPlus), the **PicoNES Mini** and **PicoNES Micro**, are **not applicable** to this emulator: they are built around Waveshare boards without PSRAM, which pico-snesPlus requires. Their gerbers are not attached to releases of this project. Older PicoNES designs (v2.1 and earlier) are not applicable either, for the reason given below.
+The other designs in the PCB README cannot be used with this emulator. The PicoNES Mini and PicoNES Micro are built around Waveshare boards without PSRAM, and on designs v2.1 and older the microcontroller board must lie flat on the PCB, which the Pimoroni Pico Plus 2 cannot.
 
 > [!NOTE]
 > Sellers on AliExpress have copied the PicoNES design and sell ready-made boards. For questions about those, contact the seller.
 
 ### PicoNES PCB
 
-The design, by [@johnedgarpark](https://twitter.com/johnedgarpark), comes from [pico-infonesPlus](https://github.com/PicoPlus-devel/pico-infonesPlus) and kept its NES-flavoured name, but there is nothing NES-specific about it — it is DVI, microSD and controller wiring, and this emulator runs on it just as well. The current design is **v2.6**.
-
 > [!IMPORTANT]
-> For this emulator the PCB only works with a [Pimoroni Pico Plus 2](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107), and that board needs design **v2.6 or later** plus male headers. A Raspberry Pi Pico 2 or Pico 2 W has no PSRAM and cannot run pico-snesPlus at all, so an older PicoNES board built around one of those cannot be reused here — see [Mounting the board](#mounting-the-board).
+> For this emulator the PCB only works with a [Pimoroni Pico Plus 2](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107), mounted on male headers. The Raspberry Pi Pico, Pico 2 and Pico 2 W in the parts list of the PCB README have no PSRAM and cannot run pico-snesPlus. Optional female socket headers, soldered into the PCB, let the board be plugged in and swapped without desoldering.
 
-<img width="480" alt="Populated PCB with a Pico plugged into the through-holes" src="https://github.com/user-attachments/assets/2bbc846d-56b1-4528-9899-01bc9b32ce11" />
+Controllers on the two GPIO controller ports:
 
-#### Mounting the board
+- **v2.8:** original SNES controllers plug in directly.
+- **v2.6:** an NES controller works, with A→B and B→Y. The ports speak the SNES protocol and clock all 16 bits, so a SNES pad maps 1:1, but it needs a [SNES-to-NES adapter cable you make yourself](snestonescontroller.md), one per port. Ready-made cables exist but are hard to find, and some do not work as expected.
 
-Design v2.6 added through-holes, and that is what makes a Pimoroni Pico Plus 2 — and with it the PSRAM this emulator needs — an option at all:
+Two controllers give a two-player setup. A USB controller for player 1 and a controller in either GPIO port for player 2 works as well. Audio is carried over HDMI.
 
-| PCB design | Takes a Pimoroni Pico Plus 2? |
-| --- | --- |
-| v2.6 or later (through-holes) | Yes — with male headers soldered on, plugged into the through-holes |
-| v2.1 and older | No — the board has to lie flat against the PCB, which the SP/CE connector on its back prevents |
+Flash `picosnesPlus_AdafruitDVISD_pico2_arm.uf2`, the same file as the breadboard build, since the PCB is the same hardware configuration. There is no Pico 2 W image, because that board has no PSRAM.
 
-> [!NOTE]
-> Soldering skills are required. Solder every connection from the board to the PCB, including the ones on the short right-hand side — those are ground.
+The parts lists and assembly notes are in the PCB README: [PicoNES v2.6](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md#picones-v26-nes-controller-ports) and [PicoNES v2.8](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md#picones-v28-snes-controller-ports).
 
-#### What you need
-
-- A [Pimoroni Pico Plus 2](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107) with **male headers** soldered on ([these](https://a.co/d/dSNPuyo) fit), plugged into the through-holes of a v2.6 or later board.
-- [Adafruit DVI Breakout Board — For HDMI Source Devices](https://www.adafruit.com/product/4984)
-- [Adafruit Micro SD SPI or SDIO Card Breakout Board — 3V ONLY!](https://www.adafruit.com/product/4682) — note this is **not** the Micro-SD breakout board+ used in the breadboard build; the PCB is laid out for this smaller one.
-- For controllers on the GPIO ports:
-  * [one or two NES controller ports](https://www.zedlabz.com/products/controller-connector-port-for-nintendo-nes-console-7-pin-90-degree-replacement-2-pack-black-zedlabz)
-  * [one or two SNES or NES controllers](https://www.amazon.com/s?k=SNES+controller)
-- [Micro USB to OTG Y-cable](https://a.co/d/b9t11rl) if you want to use a USB game controller — it powers the board and connects the controller at the same time.
-- Micro USB power supply.
-- Optional: an on/off switch, such as [this one](https://www.kiwi-electronics.com/en/spdt-slide-switch-410?search=KW-2467).
-
-Two controllers give you a two-player setup; a USB controller for player 1 and a controller in either GPIO port for player 2 works just as well. Audio on this configuration is carried over HDMI.
-
-> [!NOTE]
-> Although the sockets are NES connectors, they speak the SNES protocol as well and clock all 16 bits, so a real SNES pad maps 1:1 — see [Controllers](#controllers). The connectors differ, so a SNES pad needs a [SNES-to-NES adapter cable you make yourself](snestonescontroller.md) — one per socket. Ready-made cables exist but are hard to find, and some simply do not work as expected. A NES controller also works, with A→B and B→Y.
-
-<img width="480" alt="Two-player setup with NES controllers" src="https://github.com/user-attachments/assets/d40ed98f-4632-4161-986a-732d35290fac" />
-
-#### Which binary to flash
-
-`picosnesPlus_AdafruitDVISD_pico2_arm.uf2` — the same file as the breadboard build, since the PCB is the same hardware configuration. Unlike the sister projects there is no separate Pico 2 W image here: that board has no PSRAM and is not supported.
+| NES controller ports (v2.6; an earlier v2.0 board with the same layout is shown) | SNES controller ports (v2.8) |
+| -------------------------------------------------------------------------------- | ---------------------------- |
+| <img src="https://github.com/user-attachments/assets/d40ed98f-4632-4161-986a-732d35290fac" width="400" alt="Two-player setup with two NES controllers"> | <img src="https://raw.githubusercontent.com/PicoPlus-devel/pico_shared/main/PCB/images/picones_v2.8s_assembled.jpg" width="400" alt="PicoNES v2.8 with SNES controller ports"> |
 
 #### 3D printed case
 
-Gavin Knight ([DynaMight1124](https://github.com/DynaMight1124)) designed an NES-like enclosure for this PCB: [thingiverse.com/thing:6689537](https://www.thingiverse.com/thing:6689537). The v2.0 design has a base, a power-switch part and a choice of two top covers — one with a button that reaches the BOOTSEL button so firmware can be updated without opening the case, one without. Print the files that match the PCB version you own; Gavin's Thingiverse page has the details.
+Gavin Knight ([DynaMight1124](https://github.com/DynaMight1124)) designed an NES-like case for the v2.6 PCB: [thingiverse.com/thing:6689537](https://www.thingiverse.com/thing:6689537). It does not fit the v2.8 PCB. Two top covers are available, one with a button that presses the BOOTSEL button for firmware updates and one without. All parts are shown in the [PCB README](https://github.com/PicoPlus-devel/pico_shared/blob/main/PCB/README.md#3d-printed-case). For questions about the case, please contact the designer on the Thingiverse page.
 
 > [!IMPORTANT]
-> Download the **latest** top cover. The Pimoroni Pico Plus 2 is always mounted on headers here, and headers raise the board — only the newest cover leaves room for the USB cable, the older ones assume a Pico soldered flat onto the PCB.
+> Download the **latest** top cover. The Pimoroni Pico Plus 2 is always mounted on headers here, and headers raise the board. Only the newest cover leaves room for the USB cable; the older ones assume a Pico soldered flat onto the PCB.
 
-<img width="480" alt="Top cover with a button for BOOTSEL" src="https://github.com/user-attachments/assets/3c8f8990-51b9-4873-9054-64bb2cd6c300" />
-
-For the full photo gallery and assembly detail, see the [PCB section of the pico-infonesPlus documentation](https://github.com/PicoPlus-devel/pico-infonesPlus#pcb-with-raspberry-pi-pico-or-pico-2-and-pimoroni-pico-plus-2).
+| Top cover | Base |
+| --------- | ---- |
+| <img src="https://github.com/user-attachments/assets/c6205db3-580e-41e9-83e4-66c9534c6519" width="380" alt="Top cover"> | <img src="https://github.com/user-attachments/assets/256bbd1b-b6db-485d-a59c-fd22fd017887" width="380" alt="Base with the PCB fitted"> |
 
 ***
 
@@ -263,7 +238,7 @@ Every supported controller delivers the full SNES button set (B, Y, Select, Star
 | DualShock 4 / DualSense | Cross→B, Circle→A, Square→Y, Triangle→X; L1 or L2→L, R1 or R2→R; Share/touchpad→Select, Options→Start |
 | MantaPad (AliExpress SNES USB pad, 081f:e401 / 0810:e501) | 1:1 by label — SNES mode is active at connect, no Y-press needed |
 | Wii Classic / SNES-Classic-mini pad (I2C port) | 1:1 by label, including L/R (ZL/ZR also act as L/R) |
-| SNES controller on the GPIO NES port (boards that have one) | 1:1 by label — the port clocks all 16 bits |
+| SNES controller on a GPIO controller port (boards that have one; directly on the PicoNES v2.8 PCB, through an adapter cable on an NES port) | 1:1 by label — the port clocks all 16 bits |
 | NES controller on the GPIO NES port | Positional: A→B, B→Y (jump/run); Select/Start/d-pad 1:1 |
 | USB keyboard | Z=B, X=A, C=X, V=Y, Q=L, W=R, A=Select, S=Start, arrows=d-pad |
 | PS Classic | Cross→B, Circle→A, Square→Y, Triangle→X (shoulders not mapped yet) |
