@@ -173,8 +173,8 @@ The other designs in the PCB README cannot be used with this emulator. The PicoN
 
 Controllers on the two GPIO controller ports:
 
-- **v2.8:** original SNES controllers plug in directly.
-- **v2.6:** an NES controller works, with A→B and B→Y. The ports speak the SNES protocol and clock all 16 bits, so a SNES pad maps 1:1, but it needs a [SNES-to-NES adapter cable you make yourself](snestonescontroller.md), one per port. Ready-made cables exist but are hard to find, and some do not work as expected.
+- **v2.8:** original SNES controllers plug in directly. An original [SNES Mouse](#snes-mouse) can be used in controller port 1, for Mario Paint and other mouse games.
+- **v2.6:** an NES controller works, with A→B and B→Y. The ports speak the SNES protocol and clock all 16 bits, so a SNES pad maps 1:1, but it needs a [SNES-to-NES adapter cable you make yourself](snestonescontroller.md), one per port. Ready-made cables exist but are hard to find, and some do not work as expected. An original [SNES Mouse](#snes-mouse) works in controller port 1 through the same adapter cable.
 
 Two controllers give a two-player setup. A USB controller for player 1 and a controller in either GPIO port for player 2 works as well. Audio is carried over HDMI.
 
@@ -245,7 +245,7 @@ Every supported controller delivers the full SNES button set (B, Y, Select, Star
 | NES controller on the GPIO NES port | Positional: A→B, B→Y (jump/run); Select/Start/d-pad 1:1 |
 | USB keyboard | Z=B, X=A, C=X, V=Y, Q=L, W=R, A=Select, S=Start, arrows=d-pad |
 | PS Classic | Cross→B, Circle→A, Square→Y, Triangle→X (shoulders not mapped yet) |
-| USB mouse | Emulates the SNES Mouse for Mario Paint — see [SNES Mouse](#snes-mouse-usb-mouse) below |
+| USB mouse, or an original SNES Mouse in GPIO controller port 1 | Emulates the SNES Mouse for Mario Paint — see [SNES Mouse](#snes-mouse) below |
 
 Two players: a second USB pad is player 2. When a USB pad is connected, the GPIO NES/SNES pad and the Wii Classic pad act as player 2; without one they are player 1.
 
@@ -255,15 +255,26 @@ In the menu itself, a SNES pad on the GPIO port is read by label like a USB or W
 
 See the [pico-infonesPlus README](https://github.com/PicoPlus-devel/pico-infonesPlus#gamecontroller-support) for general controller notes and troubleshooting.
 
-### SNES Mouse (USB mouse)
+### SNES Mouse
 
-Plug in any USB mouse and it becomes a [SNES Mouse](https://en.wikipedia.org/wiki/Super_NES_Mouse) — no setting to change. Start Mario Paint and the hand cursor follows the mouse; left and right buttons map 1:1. Games without mouse support simply ignore it.
+The emulator supports the [SNES Mouse](https://en.wikipedia.org/wiki/Super_NES_Mouse), used by Mario Paint and other mouse games. Two kinds of mouse can be used, and no setting needs to be changed for either:
+
+- **A USB mouse**, connected to the USB port.
+- **An original SNES Mouse**, connected to GPIO controller port 1. On a board with SNES controller ports, such as the [PicoNES v2.8 PCB](#picones-pcb), the mouse plugs in directly. On a board with NES controller ports, such as the PicoNES v2.6, it connects through the [SNES-to-NES adapter cable](snestonescontroller.md). The mouse uses only the power, clock, latch and data lines, which every GPIO controller port and the adapter cable carry. A mouse in controller port 2 is not used.
+
+Both can be connected at the same time. Their movements are added together, and the buttons of either mouse work. Games without mouse support ignore the mouse.
 
 How it works, and what to expect:
 
 - **The mouse occupies controller port 1 while it is plugged in**, exactly like connecting the real peripheral to the console's first controller socket (which is where Mario Paint expects it). The game ignores player 1's pad for as long as the mouse is connected — unplug the mouse and the pad is player 1 again. Both directions work mid-game, no reset needed.
 - **Player 2 and the menu are unaffected.** A second pad keeps working, and Select + Start on any pad still opens the settings menu, mouse plugged in or not.
-- **Motion is passed through as relative movement**, the way the real mouse reports it: the emulator hands the game the raw mouse deltas (halved once, because modern optical mice are far finer than the ~50 dpi original) and the game moves its own cursor — so edge behavior, cursor limits and any in-game speed settings behave exactly as on original hardware. Movement is capped at the real mouse's maximum of 63 counts per frame. To change the sensitivity, adjust `SNES_MOUSE_SENS_DIV` in `snes9x/src/port_glue.cpp` and rebuild.
+- **Motion is passed through as relative movement**, the way the real mouse reports it, and the game moves its own cursor. Edge behavior, cursor limits and in-game speed settings therefore behave as on original hardware. Movement is capped at the real mouse's maximum of 63 counts per frame.
+- **A USB mouse's movement is halved**, because modern optical mice are far finer than the original's approximately 50 counts per inch. A USB mouse therefore moves the cursor considerably faster than an original SNES Mouse: a mouse at 800 dpi about eight times as fast, a mouse at 1600 dpi about sixteen times. To change this, adjust `SNES_MOUSE_SENS_DIV` in `snes9x/src/port_glue.cpp` and rebuild; a value of 16 gives the speed of the original for a mouse at 800 dpi. An original SNES Mouse is passed through unscaled: when it is connected, the emulator sets it to its lowest sensitivity, at which it reports its movement one to one.
+- **The controller test screen** in the settings menu names an original SNES Mouse as "SNES Mouse" and shows its buttons and the movement it has reported (moving right and down counts up).
+
+#### Mouse test ROM
+
+[tools/mousetest](tools/mousetest) contains `mousetest.sfc`, a small test ROM for either kind of mouse. Copy it to the SD card and start it like any game. It shows a cursor that follows the mouse, the cursor's X and Y position, the movement of the last frame, both buttons with a click counter for each, the sensitivity the mouse reports, and the raw 32-bit mouse report in hexadecimal. The ROM is generated by `tools/mousetest/mousetest.py`, which requires only Python 3; no SNES assembler is needed.
 
 ***
 
@@ -373,6 +384,7 @@ Diagnostic output is written to the serial console (UART).
 | `ENABLE_SDD1` | S-DD1 support. When off, these games are refused at load time. |
 | `SDD1_CACHE` | Cache for unpacked S-DD1 graphics. Turn off only to compare; see the `D` and `H` values under [S-DD1](#s-dd1). |
 | `ENABLE_USB_MSC` | [USB drive mode](#usb-drive-mode). |
+| `ENABLE_SNES_MOUSE_GPIO` | An original [SNES Mouse](#snes-mouse) in GPIO controller port 1. |
 
 **Diagnostics**, off by default and intended for testing only:
 
