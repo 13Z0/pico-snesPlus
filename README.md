@@ -345,9 +345,9 @@ If a game was moved, renamed or deleted on the SD card in the meantime, the list
 
 ## Building from source
 
-Build on Linux (a Raspberry Pi also works) or on Windows under WSL, with the [Pico SDK](https://github.com/raspberrypi/pico-sdk) version 2.x or later installed and `PICO_SDK_PATH` set. Two additional requirements:
+Build on Linux (a Raspberry Pi also works) or on Windows under WSL, with the [Pico SDK](https://github.com/raspberrypi/pico-sdk) version 2.2.0 installed and `PICO_SDK_PATH` set. Two additional requirements:
 
-- The TinyUSB submodule of the Pico SDK must be on the latest master branch (`cd $PICO_SDK_PATH/lib/tinyusb && git checkout master && git pull`).
+- The TinyUSB submodule of the Pico SDK must stay at the version the SDK includes (TinyUSB 0.18.0; `git clone --branch 2.2.0 --recurse-submodules https://github.com/raspberrypi/pico-sdk.git` provides it). Do not switch it to TinyUSB's master branch: with the 2026 version of that branch, USB devices connected through a hub to the board's own USB port are often not detected.
 - Configurations 8 and 14 use PIO USB for a second USB port and need [Pico-PIO-USB](https://github.com/sekigon-gonnoc/Pico-PIO-USB), with `PICO_PIO_USB_PATH` pointing to the cloned repository.
 
 Then:
