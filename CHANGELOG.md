@@ -1,6 +1,6 @@
 # CHANGELOG
 
-**v0.9** adds support for the original SNES Mouse.
+**v0.9.1** finds USB controllers at every start on the Adafruit Fruit Jam and other boards with PIO-USB.
 
 # General Info
 
@@ -15,6 +15,12 @@
 > **The optional 504 MHz overclock in the settings menu is not advised. Leave it off.**
 >
 > It gains very little — the bottleneck is PSRAM bandwidth, not the CPU clock, so most games run at essentially the same speed as at the default 378 MHz. It raises the core voltage, makes the chip run considerably hotter, and can overheat, destabilise or permanently damage the RP2350 and the board it is on. It is off by default and exists for experimenting only. Enabling it is entirely at your own risk; the author accepts no responsibility for any damage.
+
+# v0.9.1
+
+## Fixes
+
+- **USB controllers on the Adafruit Fruit Jam and other boards with PIO-USB are now found at every start.** On boards with an older RP2350 chip they were often not detected.
 
 # v0.9
 
